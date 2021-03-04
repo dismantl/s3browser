@@ -2,6 +2,11 @@
 #
 FROM php:5.6.30-apache
 
+RUN \
+  apt-get update && \
+  apt-get install -y ca-certificates && \
+  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Put App files
 COPY www /srv/www/s3browser/www
 
