@@ -35,7 +35,7 @@ $c['cache-dir'] = getenv_default('CACHE_DIR', '/tmp');
 
 // Bucket
 $c['bucket-name'] = getenv_default('BUCKET_NAME');
-$c['bucket-url-prefix'] = getenv_default('BUCKET_URL_PREFIX', 'http://'.$c['bucket-name'].'.s3.amazonaws.com');
+$c['bucket-url-prefix'] = getenv_default('BUCKET_URL_PREFIX', 'https://'.$c['bucket-name'].'.s3.amazonaws.com');
 
 // Google analytics id to use for tracking
 // Download links will also be recorded in Google Analytics
