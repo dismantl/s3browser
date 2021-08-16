@@ -1,9 +1,6 @@
 Amazon S3 Directory Browser
 ===========================
 
-Please report any issues [here on GitHub](https://github.com/powdahound/s3browser/issues).
-
-
 Configuration
 -------------
 
