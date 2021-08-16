@@ -34,6 +34,9 @@
 * @link http://undesigned.org.za/2007/10/22/amazon-s3-php-class
 * @version 0.5.1
 */
+
+use Aws\S3\S3Client;
+
 class S3
 {
 	// ACL flags
@@ -1179,12 +1182,23 @@ class S3
 	*/
 	public static function getAuthenticatedURL($bucket, $uri, $lifetime, $hostBucket = false, $https = false)
 	{
-		$expires = self::__getTime() + $lifetime;
-		$uri = str_replace(array('%2F', '%2B', '%3A'), array('/', '+', ':'), rawurlencode($uri));
-		return sprintf(($https ? 'https' : 'http').'://%s/%s?AWSAccessKeyId=%s&Expires=%u&Signature=%s',
-		// $hostBucket ? $bucket : $bucket.'.s3.amazonaws.com', $uri, self::$__accessKey, $expires,
-		$hostBucket ? $bucket : self::$endpoint.'/'.$bucket, $uri, self::$__accessKey, $expires,
-		urlencode(self::__getHash("GET\n\n\n{$expires}\n/{$bucket}/{$uri}")));
+		$s3Client = new S3Client([
+			'version' => '2006-03-01',
+			'region'  => 'us-east-1',
+			'signature_version' => 'v4',
+			'credentials' => [
+				'key'    => self::$__accessKey,
+				'secret' => self::$__secretKey,
+			]
+		]);
+		// AWS s3v4 signature
+		$cmd = $s3Client->getCommand('GetObject', [
+			'Bucket' => $bucket,
+			'Key' => $uri
+		]);
+		$request = $s3Client->createPresignedRequest($cmd, '+'.$lifetime.' seconds');
+		// Get the actual presigned-url
+		return (string)$request->getUri();
 	}
 
 

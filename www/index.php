@@ -1,6 +1,7 @@
 <?php
 define('ROOT_DIR', dirname(__FILE__));
 require ROOT_DIR.'/include/S3Browser.php';
+require __DIR__ . '/vendor/autoload.php';
 
 // Load config
 $configFile = ROOT_DIR.'/config.php';
