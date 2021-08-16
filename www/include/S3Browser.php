@@ -140,6 +140,7 @@ class S3Browser {
         if (!$isFolder && $i == $numParts-1 && !isset($cur[$part])) {
           $cur[$part] = $data;
           $cur[$part]['hsize'] = self::formatSize($data['size']);
+          $cur[$part]['time'] = $data['time'];
           $cur[$part]['path'] = $cur[$part]['name'];
           $cur[$part]['name'] = $part;
           // AWS s3v4 signature

@@ -166,6 +166,7 @@
           <span><?= $key ?></span>
         </a>
         <span class="size"><?= $info['hsize'] ?></span>
+        <span class="size"><?= date("F j, Y, g:i a", $info['time']); ?></span>
         <? endif; ?>
       </li>
     <? endforeach; ?>
